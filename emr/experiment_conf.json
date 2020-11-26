@@ -7,32 +7,28 @@
   ],
   "algorithm" : [
     {
-      "name" : "Kmnb",
+      "name" : "Kmn",
       "program" : "s3://silhouette-rcv1/kmeans_beta.py",
       "dataset" : "s3n://ernest-data/rcv1_test_256.binary"
     },
     {
-      "name" : "Nvbb",
+      "name" : "Nvb",
       "program" : "s3://silhouette-rcv1/naivebayes.py",
       "dataset" : "s3n://ernest-data/rcv1_test_256.binary"
     }
   ],
   "design" : [
     {
-      "cores" : 4,
-      "partition" : 0.015214
-    },
-    {
-      "cores" : 16,
-      "partition" : 0.060650
-    },
-    {
-      "cores" : 6,
-      "partition" : 0.022204
+      "cores" : 10,
+      "partition" : 1
     },
     {
       "cores" : 10,
-      "partition" : 0.043174
+      "partition" : 1
+    },
+    {
+      "cores" : 10,
+      "partition" : 1
     }
   ]
 }

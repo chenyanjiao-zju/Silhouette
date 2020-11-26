@@ -1,5 +1,6 @@
 from pyspark.ml.regression import LinearRegression
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, when
 import time
 import sys
 
@@ -16,6 +17,15 @@ if __name__ == "__main__":
     # Load training data
     # s3://ernest-data/rcv1_test_256.binary
     training = spark.read.format("libsvm").load(input_file)
+    training.withColumn(
+        "label",
+        when(
+            col("label") == -1.0,
+            1.0
+        ).otherwise(col("label"))
+    )
+    # training = spark.read.csv(input_file)
+    training.show()
     training = training.sample(False, partition).coalesce(num_parts)
     training.cache().count()
     lr = LinearRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8)

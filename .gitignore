@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/emr/test_credential.py
+/emr/report-Nov-3.md
+/emr/report-Nov-3.pdf
+/emr/report-wangxu-Nov-3.pdf
+/emr/test_credential.py
+/emr/emr_usage_demo.py
+/emr/emr_basics.py
+/emr/deploy_emr_cluster_test.py
+/emr/deploy_emr.py
+/flintrock/spark_cluster.pem
+/emr/logs/

@@ -255,6 +255,7 @@ class SilExperiment:
     def emrThreadWrapper(self, instance, algo, plan):
         """ here we use a wrapper to threading the jobs concurrently """
         machine_num = plan['cores'] / instance['cores']  # here we omit the problem of remainder
+        machine_num += 1  # the master node will not involve the calculation
         single_step = EMRStep(algo['name'], plan['partition'], algo['program'], algo['dataset'])
         single_cluster = EMRCluster(instance, machine_num, plan['partition'], single_step)
         single_cluster.run()
@@ -271,11 +272,11 @@ class SilExperiment:
                     t = threading.Thread(target=self.emrThreadWrapper, args=(instance, algo, plan))
                     threads.append(t)
                     t.start()
-                    if plan['partition'] != 1:
-                        plan['partition'] = 1
-                        t_1 = threading.Thread(target=self.emrThreadWrapper, args=(instance, algo, plan))
-                        threads.append(t_1)
-                        t_1.start()
+                    # if plan['partition'] != 1:
+                    #     plan['partition'] = 1
+                    #     t_1 = threading.Thread(target=self.emrThreadWrapper, args=(instance, algo, plan))
+                    #     threads.append(t_1)
+                    #     t_1.start()
         print(f'waiting for threads to complete.... Total {len(threads)} threads running')
         for t in threads:
             t.join()
@@ -419,7 +420,6 @@ class EMRCluster:
             temp = first_line.decode(encoding)
             result = temp.split(':')[1].strip()
             print(result)
-            print(float(result) + 1)
             f.close()
 
             # write to file for further analysis
